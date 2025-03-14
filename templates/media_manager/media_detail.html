@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ media_item.title }} - DropTalk{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1 class="card-title mb-0" onclick="speak('{{ media_item.title }}')" style="cursor: pointer;">
+                        {{ media_item.title }}
+                    </h1>
+                    <div class="btn-group">
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'media_manager:media_edit' media_item.pk %}" class="btn btn-outline-secondary">
+                                <i class="bi bi-pencil"></i> 編集
+                            </a>
+                            <a href="{% url 'media_manager:media_delete' media_item.pk %}" class="btn btn-outline-danger">
+                                <i class="bi bi-trash"></i> 削除
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    {% if media_item.media_type == 'image' %}
+                        <img src="{{ media_item.file.url }}" class="img-fluid rounded" alt="{{ media_item.title }}">
+                    {% else %}
+                        <video controls class="w-100 rounded">
+                            <source src="{{ media_item.file.url }}" type="video/mp4">
+                            お使いのブラウザは動画の再生に対応していません。
+                        </video>
+                    {% endif %}
+                </div>
+
+                <div class="card-text mb-4">
+                    {{ media_item.description|linebreaks }}
+                </div>
+
+                <div class="text-muted small">
+                    <p class="mb-1">
+                        <i class="bi bi-calendar"></i> 作成日時: {{ media_item.created_at|date:"Y/m/d H:i" }}
+                    </p>
+                    <p class="mb-1">
+                        <i class="bi bi-clock"></i> 更新日時: {{ media_item.updated_at|date:"Y/m/d H:i" }}
+                    </p>
+                    <p class="mb-0">
+                        <i class="bi bi-file-earmark"></i> メディアタイプ: {{ media_item.get_media_type_display }}
+                    </p>
+                </div>
+
+                <div class="mt-4">
+                    <a href="{% url 'media_manager:media_list' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left"></i> 戻る
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+    function speak(text) {
+        // 既存の音声を停止
+        window.speechSynthesis.cancel();
+        
+        // 新しい音声を作成
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'ja-JP';  // 日本語に設定
+        utterance.rate = 1.0;      // 読み上げ速度
+        utterance.pitch = 1.0;     // 音の高さ
+        utterance.volume = 1.0;    // 音量
+        
+        // 音声を再生
+        window.speechSynthesis.speak(utterance);
+    }
+</script>
+{% endblock %}
+{% endblock %} 
