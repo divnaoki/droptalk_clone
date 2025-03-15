@@ -7,6 +7,8 @@ from PIL import Image
 import io
 import tempfile
 import os
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 
 class MediaItem(models.Model):
     MEDIA_TYPES = (

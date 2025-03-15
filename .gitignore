@@ -27,12 +27,15 @@ db.sqlite3
 db.sqlite3-journal
 media/
 static/
+staticfiles/
 
 # Virtual Environment
 venv/
 env/
 ENV/
 .env
+.env.local
+.env.*.local
 
 # IDE
 .idea/
@@ -56,14 +59,6 @@ coverage.xml
 *.mo
 *.pot
 
-# Django stuff:
-*.log
-local_settings.py
-
-# Database
-*.sqlite3
-*.db
-
 # Media files
 media/
 uploads/
@@ -72,6 +67,10 @@ thumbnails/
 # Static files
 static/
 staticfiles/
+
+# Database
+*.sqlite3
+*.db
 
 # Environment variables
 .env
