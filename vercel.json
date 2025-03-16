@@ -4,20 +4,16 @@
         {
             "src": "droptalk/wsgi.py",
             "use": "@vercel/python"
-        },
-        {
-            "src": "static/**",
-            "use": "@vercel/static"
         }
     ],
     "routes": [
         {
-            "src": "/static/(.*)",
-            "dest": "/static/$1"
-        },
-        {
             "src": "/(.*)",
             "dest": "droptalk/wsgi.py"
         }
-    ]
+    ],
+    "env": {
+        "PYTHONPATH": ".",
+        "DJANGO_SETTINGS_MODULE": "droptalk.settings"
+    }
 } 
