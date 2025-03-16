@@ -1,14 +1,10 @@
 from django.db import models
 from django.utils import timezone
 from django.core.files.base import ContentFile
-import cv2
-import numpy as np
 from PIL import Image
 import io
-import tempfile
 import os
 from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
 
 class MediaItem(models.Model):
     MEDIA_TYPES = (
